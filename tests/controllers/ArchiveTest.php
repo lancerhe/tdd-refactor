@@ -48,4 +48,12 @@ class ArchiveTest extends TestCase {
         $this->assertEquals(3, $this->medoo()->query("SELECT count(*) FROM request_archives_201501")->fetchAll()[0][0]);
         $this->assertEquals(4, $this->medoo()->query("SELECT count(*) FROM request")->fetchAll()[0][0]);
     }
+
+    /**
+     * teardown
+     */
+    public function tearDown() {
+        parent::tearDown();
+        unlink(ROOT_PATH . "/database/log_test");
+    }
 }
