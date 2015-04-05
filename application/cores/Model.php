@@ -1,6 +1,6 @@
 <?php
 /**
- * Ó¦ÓÃºËÐÄÄ£ÐÍÀà  \Core\Model
+ * åº”ç”¨æ ¸å¿ƒæ¨¡åž‹ç±»  \Core\Model
  * @author Lancer He <lancer.he@gmail.com>
  * @since  2014-04-17
  */
