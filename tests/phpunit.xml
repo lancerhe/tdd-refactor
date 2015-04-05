@@ -3,5 +3,8 @@
         <testsuite name="Controllers">
             <file>./controllers/ArchiveTest.php</file>
         </testsuite>
+        <testsuite name="Services">
+            <file>./services/HandlerTest.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
