@@ -4,7 +4,7 @@
  * @author Lancer He <lancer.he@gmail.com>
  * @since  2015-03-22
  */
-class Controller_Archive extends \Core\Controller\Cli {
+class Controller_Archive extends \Core\Controller {
 
     /**
      * Disable render in cli.

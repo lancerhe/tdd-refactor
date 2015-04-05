@@ -1,9 +1,8 @@
 <?php
 /**
- * åº”ç”¨æ ¸å¿ƒæ¨¡åž‹ç±»  \Core\Model
+ * Ó¦ÓÃºËÐÄÄ£ÐÍÀà  \Core\Model
  * @author Lancer He <lancer.he@gmail.com>
  * @since  2014-04-17
  */
 namespace Core;
-
 class Model {}

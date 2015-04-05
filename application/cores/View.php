@@ -18,32 +18,4 @@ class View extends \Yaf\View\Simple {
         header("Content-type: text/html; charset=utf-8");
         parent::display( $view_path, $tpl_vars );
     }
-
-
-    /**
-     * Display api response
-     * @param  array  $data  Response data.
-     * @param  int    $code  Response code code, success: 0, error: exception code.
-     * @return string
-     */
-    public function displayApi( $data = array(), $code = 0 ) {
-        $this->assign('data', $data);
-        $this->assign('code', $code);
-        $this->display(APPLICATION_VIEWS_PATH.'/common/response_api.html');
-    }
-
-
-    /**
-     * Display ajax response
-     * @param  string  $message   Response message.
-     * @param  array   $data      Response data.
-     * @param  int     $code      Response code code, success: 0, error: exception code.
-     * @return string
-     */
-    public function displayAjax( $message, $data = array(), $code = 0 ) {
-        $this->assign('data',    $data);
-        $this->assign('code',    $code);
-        $this->assign('message', $message);
-        $this->display(APPLICATION_VIEWS_PATH.'/common/response_ajax.html');
-    }
 }
