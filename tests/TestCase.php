@@ -24,7 +24,9 @@ class TestCase extends \PHPUnit_Framework_TestCase {
     }
 
     private function __setUpPHPIniVariables() {
-
+        register_shutdown_function(function() {
+            unlink(ROOT_PATH . "/database/log_test");
+        });
     }
 
     private function __setUpApplicationInit() {

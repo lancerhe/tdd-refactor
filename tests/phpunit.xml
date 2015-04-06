@@ -5,6 +5,7 @@
         </testsuite>
         <testsuite name="Services">
             <file>./services/HandlerTest.php</file>
+            <file>./services/RequestTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

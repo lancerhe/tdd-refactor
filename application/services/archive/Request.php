@@ -13,6 +13,10 @@ class Request {
     protected $_limit = 0;
 
     protected $_archive_time = 0;
+
+    protected $_success = 0;
+
+    protected $_failure = 0;
     
     public function setLimit($limit) {
         $this->_limit = $limit;
@@ -32,7 +36,13 @@ class Request {
 
         foreach ($requests as $request) {
             $request['archive_time'] = time();
-            (new Handler())->archive($request);
+            $result = (new Handler())->archive($request);
+            if ( $result ) 
+                $this->_success ++ ;
+            else
+                $this->_failure ++ ;
         }
+
+        file_put_contents("/tmp/archiveresult.log", "success:{$this->_success}; failure: {$this->_failure}"  . PHP_EOL, FILE_APPEND);
     }
 }

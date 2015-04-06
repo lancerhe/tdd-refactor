@@ -35,15 +35,17 @@ class Handler {
             $this->create();
         } catch (\Exception $Exception) {
             file_put_contents($this->_logger_file, date("Y-m-d") . ":" . $Exception->getMessage() . PHP_EOL, FILE_APPEND);
-            return;
+            return false;
         }
 
         try {
             $this->remove();
         } catch (\Exception $Exception) {
+            $this->_failure ++;
             file_put_contents($this->_logger_file, date("Y-m-d") . ":" . $Exception->getMessage() . PHP_EOL, FILE_APPEND);
-            return;
+            return false;
         }
+        return true;
     }
 
     public function create() {
