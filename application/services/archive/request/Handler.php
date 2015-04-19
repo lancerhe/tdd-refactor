@@ -8,21 +8,6 @@ namespace Service\Archive\Request;
 
 class Handler {
 
-    protected $_create_table_sql = 'CREATE TABLE IF NOT EXISTS {table} (
-    "id"  INTEGER,
-    "amount"  TEXT NOT NULL ,
-    "coupons" INTEGER NOT NULL ,
-    "cash" INTEGER NOT NULL ,
-    "request" INTEGER NOT NULL ,
-    "type" INTEGER NOT NULL ,
-    "production_id" INTERGE NOT NULL,
-    "source_ip" TEXT NOT NULL,
-    "source_name" TEXT NOT NULL,
-    "ctime" INTEGER NOT NULL,
-    "archive_time" INTEGER NOT NULL,
-    PRIMARY KEY ("id" ASC) ON CONFLICT ROLLBACK
-)';
-
     protected $_logger_file = "/tmp/archive.log";
 
     public function setLoggerFile($file) {
@@ -56,12 +41,9 @@ class Handler {
     }
 
     public function create() {
-        $Model  = new \Core\Model\Medoo();
-        $sql    = str_replace('{table}', $this->buildTableName() , $this->_create_table_sql);
-
-        if ( ! $result = $Model->medoo()->exec( $sql ) ) 
-            throw new \Exception('Create table failure.');
-
+        $Model = new \Model_Archive();
+        $Model->createTableIfNotExist($this->buildTableName());
+        
         $result = $Model->medoo()->insert($this->buildTableName(), $this->_row);
 
         if ( $Model->medoo()->error()[2] ) 
