@@ -27,14 +27,7 @@ class Request {
     }
 
     public function archive() {
-        // $Model    = new \Core\Model\Medoo();
-        // $requests = $Model->medoo()
-        //     ->query("SELECT * FROM request WHERE ctime < {$this->_archive_time} ORDER BY ctime ASC LIMIT {$this->_limit}")
-        //     ->fetchAll(\PDO::FETCH_ASSOC);
-
         $requests = ( new \Model_Archive() )->fetchRequestsBeforeCtime($this->_archive_time, $this->_limit);
-
-        if ( empty($requests) ) return;
 
         foreach ($requests as $request) {
             $request['archive_time'] = time();
