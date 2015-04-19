@@ -47,6 +47,7 @@ class Handler {
     }
 
     public function remove() {
-        $this->_Model_Archive->removeById($this->_row['id']);
+        $SourceEntity = new \Service\Archive\Request\SourceEntity($this->_row);
+        $SourceEntity->remove();
     }
 }
