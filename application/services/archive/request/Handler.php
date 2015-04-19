@@ -25,12 +25,6 @@ class Handler {
     public function archive($row) {
         try {
             $this->create($row);
-        } catch (\Exception $Exception) {
-            $this->writeExceptionLog( $Exception->getMessage() );
-            return false;
-        }
-
-        try {
             $this->remove($row);
         } catch (\Exception $Exception) {
             $this->writeExceptionLog( $Exception->getMessage() );
