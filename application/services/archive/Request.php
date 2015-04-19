@@ -14,10 +14,6 @@ class Request {
     protected $_limit = 0;
 
     protected $_archive_time = 0;
-
-    protected $_success = 0;
-
-    protected $_failure = 0;
     
     public function setLimit($limit) {
         $this->_limit = $limit;
@@ -32,8 +28,7 @@ class Request {
 
         $HandlerCounter = new HandlerCounter();
         $HandlerCounter->start();
-        foreach ($requests as $request)
-            $HandlerCounter->count( (new Handler())->archive($request) );
+        foreach ($requests as $request) $HandlerCounter->count( (new Handler())->archive($request) );
         $HandlerCounter->close();
     }
 }

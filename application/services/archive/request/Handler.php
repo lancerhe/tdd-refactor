@@ -13,7 +13,6 @@ use Service\Archive\Request\SourceEntity;
 class Handler {
 
     public function __construct() {
-        $this->_Model_Archive = new \Model_Archive();
         $this->_ExceptionLogger = new ExceptionLogger();
     }
 

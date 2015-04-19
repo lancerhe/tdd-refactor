@@ -10,11 +10,6 @@ use Service\Archive\Request\Handler;
 
 class HandlerCounter {
 
-    /**
-     * @var Hander
-     */
-    protected $_Handler;
-
     protected $_failure = 0;
 
     protected $_success = 0;
