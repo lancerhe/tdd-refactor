@@ -12,6 +12,7 @@ class ArchiveEntity extends SourceEntity {
 
     public function __construct($row) {
         parent::__construct($row);
+        $this->archive_time = time();
     }
 
     protected function _buildTableName() {
@@ -21,6 +22,6 @@ class ArchiveEntity extends SourceEntity {
     public function create() {
         $Model_Archive = new \Model_Archive();
         $Model_Archive->createTableIfNotExist($this->_buildTableName());
-        $Model_Archive->insert($this->_buildTableName(), $this->_row);
+        $Model_Archive->insert($this->_buildTableName(), (array)$this);
     }
 }

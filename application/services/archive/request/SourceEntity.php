@@ -12,11 +12,10 @@ class SourceEntity {
         foreach ($row as $key => $value) {
             $this->$key = $value;
         }
-        $this->_row = $row;
     }
 
     public function remove() {
         $Model_Archive = new \Model_Archive();
-        $Model_Archive->removeById($this->_row['id']);
+        $Model_Archive->removeById($this->id);
     }
 }
