@@ -6,20 +6,18 @@
  */
 namespace Service\Archive\Request;
 
+use Service\Archive\Request\ExceptionLogger;
 class Handler {
 
     protected $_logger_file = "/tmp/archive.log";
 
     public function __construct() {
         $this->_Model_Archive = new \Model_Archive();
+        $this->_ExceptionLogger = new ExceptionLogger();
     }
 
     public function setLoggerFile($file) {
-        $this->_logger_file = $file;
-    }
-
-    public function writeExceptionLog($message) {
-        file_put_contents($this->_logger_file, date("Y-m-d") . ":" . $message . PHP_EOL, FILE_APPEND);
+        $this->_ExceptionLogger->setOutputFile($file);
     }
 
     public function archive($row) {
@@ -27,7 +25,8 @@ class Handler {
             $this->create($row);
             $this->remove($row);
         } catch (\Exception $Exception) {
-            $this->writeExceptionLog( $Exception->getMessage() );
+            $this->_ExceptionLogger->setException($Exception);
+            $this->_ExceptionLogger->process();
             return false;
         }
         return true;
