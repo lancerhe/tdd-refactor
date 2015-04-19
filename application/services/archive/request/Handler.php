@@ -12,8 +12,6 @@ use Service\Archive\Request\SourceEntity;
 
 class Handler {
 
-    protected $_logger_file = "/tmp/archive.log";
-
     public function __construct() {
         $this->_Model_Archive = new \Model_Archive();
         $this->_ExceptionLogger = new ExceptionLogger();
