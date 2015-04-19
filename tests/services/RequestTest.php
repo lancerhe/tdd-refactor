@@ -1,14 +1,14 @@
 <?php
 /**
- * Request archive controller testcase.
+ * Request archive service testcase.
  * @author Lancer He <lancer.he@gmail.com>
  * @since  2015-03-22
  */
-namespace TestCase\Controller;
+namespace TestCase\Service;
 
 use \YafUnit\TestCase;
 
-class ArchiveTest extends TestCase {
+class RequestTest extends TestCase {
 
     protected $_setup_data = [
         "('1', '56500', '1364', '13636', '15000', '100040', '1', '10.50.51.72', 'apps', '1421035200')",
@@ -24,6 +24,7 @@ class ArchiveTest extends TestCase {
     public function setUp() {
         parent::setUp();
         $this->setUpDatabase();
+        if ( is_file("/tmp/archiveresult.log") ) unlink("/tmp/archiveresult.log");
     }
 
     /**
@@ -41,18 +42,11 @@ class ArchiveTest extends TestCase {
      * @test
      */
     public function archive() {
-        $request = new \YafUnit\Request\Http('/archive/request');
-        self::$_app->getDispatcher()->dispatch( $request );
+        $Archive = new \Service\Archive\Request();
+        $Archive->setLimit(3);
+        $Archive->setPassDays(40);
+        $Archive->archive();
 
-        $this->assertEquals(1, $this->medoo()->query("SELECT count(*) FROM request_archives_201502")->fetchAll()[0][0]);
-        $this->assertEquals(3, $this->medoo()->query("SELECT count(*) FROM request_archives_201501")->fetchAll()[0][0]);
-        $this->assertEquals(4, $this->medoo()->query("SELECT count(*) FROM request")->fetchAll()[0][0]);
-    }
-
-    /**
-     * teardown
-     */
-    public function tearDown() {
-        parent::tearDown();
+        $this->assertContains("success:3; failure: 0", file_get_contents("/tmp/archiveresult.log"));
     }
 }

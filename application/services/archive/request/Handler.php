@@ -23,38 +23,39 @@ class Handler {
     PRIMARY KEY ("id" ASC) ON CONFLICT ROLLBACK
 )';
 
-    public function __construct() {}
+    protected $_logger_file = "/tmp/archive.log";
+
+    public function setLoggerFile($file) {
+        $this->_logger_file = $file;
+    }
 
     public function archive($row) {
         $this->_row = $row;
-
         try {
             $this->create();
         } catch (\Exception $Exception) {
-            $this->createExceptionLog(Service_Archive_CpdRequest_ExceptionLogger::TYPE_INSERT);
-            return;
+            file_put_contents($this->_logger_file, date("Y-m-d") . ":" . $Exception->getMessage() . PHP_EOL, FILE_APPEND);
+            return false;
         }
 
         try {
             $this->remove();
         } catch (\Exception $Exception) {
-            $this->createExceptionLog(Service_Archive_CpdRequest_ExceptionLogger::TYPE_INSERT);
-            return;
+            $this->_failure ++;
+            file_put_contents($this->_logger_file, date("Y-m-d") . ":" . $Exception->getMessage() . PHP_EOL, FILE_APPEND);
+            return false;
         }
-    }
-
-    public function getTableName() {
-        return 'request_archives_' . date('Ym', $this->_row['ctime']);
+        return true;
     }
 
     public function create() {
         $Model  = new \Core\Model\Medoo();
-        $sql    = str_replace('{table}', $this->getTableName(), $this->_create_table_sql);
+        $sql    = str_replace('{table}', 'request_archives_' . date('Ym', $this->_row['ctime']), $this->_create_table_sql);
 
         if ( ! $result = $Model->medoo()->exec( $sql ) ) 
             throw new \Exception('Create table failure.');
 
-        $result = $Model->medoo()->insert($this->getTableName(), $this->_row);
+        $result = $Model->medoo()->insert('request_archives_' . date('Ym', $this->_row['ctime']), $this->_row);
 
         if ( $Model->medoo()->error()[2] ) 
             throw new \Exception($Model->medoo()->error()[2]);
@@ -63,6 +64,6 @@ class Handler {
     public function remove() {
         $Model  = new \Core\Model\Medoo();
         if ( ! $result = $Model->medoo()->exec( "DELETE FROM request WHERE id = " . $this->_row['id'] ) ) 
-            throw new \Exception('delete from table failure.');
+            throw new \Exception('Delete from table failure.');
     }
 }
