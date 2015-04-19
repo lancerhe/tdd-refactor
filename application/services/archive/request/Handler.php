@@ -10,6 +10,10 @@ class Handler {
 
     protected $_logger_file = "/tmp/archive.log";
 
+    public function __construct() {
+        $this->_Model_Archive = new \Model_Archive();
+    }
+
     public function setLoggerFile($file) {
         $this->_logger_file = $file;
     }
@@ -41,13 +45,11 @@ class Handler {
     }
 
     public function create() {
-        $Model = new \Model_Archive();
-        $Model->createTableIfNotExist($this->buildTableName());
-        $Model->insert($this->buildTableName(), $this->_row);
+        $this->_Model_Archive->createTableIfNotExist($this->buildTableName());
+        $this->_Model_Archive->insert($this->buildTableName(), $this->_row);
     }
 
     public function remove() {
-        $Model = new \Model_Archive();
-        $Model->removeById($this->_row['id']);
+        $this->_Model_Archive->removeById($this->_row['id']);
     }
 }
