@@ -23,6 +23,7 @@ class Handler {
     }
 
     public function archive($row) {
+        $row['archive_time'] = time();
         $this->_row = $row;
         try {
             $this->create();

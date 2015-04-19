@@ -30,7 +30,6 @@ class Request {
         $requests = ( new \Model_Archive() )->fetchRequestsBeforeCtime($this->_archive_time, $this->_limit);
 
         foreach ($requests as $request) {
-            $request['archive_time'] = time();
             $result = (new Handler())->archive($request);
             if ( $result ) 
                 $this->_success ++ ;
