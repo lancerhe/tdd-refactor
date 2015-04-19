@@ -30,16 +30,10 @@ class Request {
     public function archive() {
         $requests = ( new \Model_Archive() )->fetchRequestsBeforeCtime($this->_archive_time, $this->_limit);
 
-        foreach ($requests as $request) {
-            $Handler = new Handler();
-            $Handler = new HandlerCounter($Handler);
-            $result = $Handler->archive($request);
-            if ( $result ) 
-                $this->_success ++ ;
-            else
-                $this->_failure ++ ;
-        }
-
-        file_put_contents("/tmp/archiveresult.log", "success:{$this->_success}; failure: {$this->_failure}"  . PHP_EOL, FILE_APPEND);
+        $HandlerCounter = new HandlerCounter();
+        $HandlerCounter->start();
+        foreach ($requests as $request)
+            $HandlerCounter->count( (new Handler())->archive($request) );
+        $HandlerCounter->close();
     }
 }

@@ -15,16 +15,20 @@ class HandlerCounter {
      */
     protected $_Handler;
 
-    protected static $_failure = 0;
+    protected $_failure = 0;
 
-    protected static $_success = 0;
+    protected $_success = 0;
 
-    public function __construct(Handler $Handler) {
-        $this->_Handler = $Handler;
+    public function count($result) {
+        ( $result ) ? $this->_success ++ : $this->_failure ++;
     }
 
-    public function archive($request) {
-        $result = $this->_Handler->archive($request);
-        return $result;
+    public function start() {
+        $this->_success = 0;
+        $this->_failure = 0;
+    }
+
+    public function close() {
+        file_put_contents("/tmp/archiveresult.log", "success:{$this->_success}; failure: {$this->_failure}"  . PHP_EOL, FILE_APPEND);
     }
 }
