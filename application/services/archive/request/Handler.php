@@ -43,11 +43,7 @@ class Handler {
     public function create() {
         $Model = new \Model_Archive();
         $Model->createTableIfNotExist($this->buildTableName());
-        
-        $result = $Model->medoo()->insert($this->buildTableName(), $this->_row);
-
-        if ( $Model->medoo()->error()[2] ) 
-            throw new \Exception($Model->medoo()->error()[2]);
+        $Model->insert($this->buildTableName(), $this->_row);
     }
 
     public function remove() {

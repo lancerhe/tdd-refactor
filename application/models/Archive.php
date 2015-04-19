@@ -33,4 +33,11 @@ class Model_Archive extends \Core\Model\Medoo {
         if ( ! $result = $this->medoo()->exec($sql) ) 
             throw new \Exception('Create table failure.');
     }
+
+    public function insert($table, $row) {
+        $this->medoo()->insert($table, $row);
+
+        if ( $this->medoo()->error()[2] ) 
+            throw new \Exception($this->medoo()->error()[2]);
+    }
 }
