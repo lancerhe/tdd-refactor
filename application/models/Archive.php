@@ -40,4 +40,9 @@ class Model_Archive extends \Core\Model\Medoo {
         if ( $this->medoo()->error()[2] ) 
             throw new \Exception($this->medoo()->error()[2]);
     }
+
+    public function removeById($id) {
+        if ( ! $result = $this->medoo()->exec( "DELETE FROM request WHERE id = " . $id ) ) 
+            throw new \Exception('Delete from table failure.');
+    }
 }

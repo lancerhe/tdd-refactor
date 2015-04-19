@@ -47,8 +47,7 @@ class Handler {
     }
 
     public function remove() {
-        $Model  = new \Core\Model\Medoo();
-        if ( ! $result = $Model->medoo()->exec( "DELETE FROM request WHERE id = " . $this->_row['id'] ) ) 
-            throw new \Exception('Delete from table failure.');
+        $Model = new \Model_Archive();
+        $Model->removeById($this->_row['id']);
     }
 }
