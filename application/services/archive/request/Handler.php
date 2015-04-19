@@ -46,8 +46,8 @@ class Handler {
     }
 
     public function create() {
-        $this->_Model_Archive->createTableIfNotExist($this->buildTableName());
-        $this->_Model_Archive->insert($this->buildTableName(), $this->_row);
+        $ArchiveEntity = new \Service\Archive\Request\ArchiveEntity($this->_row);
+        $ArchiveEntity->create();
     }
 
     public function remove() {
