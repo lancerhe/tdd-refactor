@@ -7,6 +7,7 @@
 namespace Service\Archive;
 
 use Service\Archive\Request\Handler;
+use Service\Archive\Request\HandlerCounter;
 
 class Request {
 
@@ -30,7 +31,9 @@ class Request {
         $requests = ( new \Model_Archive() )->fetchRequestsBeforeCtime($this->_archive_time, $this->_limit);
 
         foreach ($requests as $request) {
-            $result = (new Handler())->archive($request);
+            $Handler = new Handler();
+            $Handler = new HandlerCounter($Handler);
+            $result = $Handler->archive($request);
             if ( $result ) 
                 $this->_success ++ ;
             else
