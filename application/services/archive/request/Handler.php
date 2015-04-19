@@ -23,17 +23,15 @@ class Handler {
     }
 
     public function archive($row) {
-        $row['archive_time'] = time();
-        $this->_row = $row;
         try {
-            $this->create();
+            $this->create($row);
         } catch (\Exception $Exception) {
             $this->writeExceptionLog( $Exception->getMessage() );
             return false;
         }
 
         try {
-            $this->remove();
+            $this->remove($row);
         } catch (\Exception $Exception) {
             $this->writeExceptionLog( $Exception->getMessage() );
             return false;
@@ -41,13 +39,13 @@ class Handler {
         return true;
     }
 
-    public function create() {
-        $ArchiveEntity = new \Service\Archive\Request\ArchiveEntity($this->_row);
+    public function create($row) {
+        $ArchiveEntity = new \Service\Archive\Request\ArchiveEntity($row);
         $ArchiveEntity->create();
     }
 
-    public function remove() {
-        $SourceEntity = new \Service\Archive\Request\SourceEntity($this->_row);
+    public function remove($row) {
+        $SourceEntity = new \Service\Archive\Request\SourceEntity($row);
         $SourceEntity->remove();
     }
 }
