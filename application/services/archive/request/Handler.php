@@ -7,6 +7,9 @@
 namespace Service\Archive\Request;
 
 use Service\Archive\Request\ExceptionLogger;
+use Service\Archive\Request\ArchiveEntity;
+use Service\Archive\Request\SourceEntity;
+
 class Handler {
 
     protected $_logger_file = "/tmp/archive.log";
@@ -33,12 +36,12 @@ class Handler {
     }
 
     public function create($row) {
-        $ArchiveEntity = new \Service\Archive\Request\ArchiveEntity($row);
+        $ArchiveEntity = new ArchiveEntity($row);
         $ArchiveEntity->create();
     }
 
     public function remove($row) {
-        $SourceEntity = new \Service\Archive\Request\SourceEntity($row);
+        $SourceEntity = new SourceEntity($row);
         $SourceEntity->remove();
     }
 }
