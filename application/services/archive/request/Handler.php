@@ -41,10 +41,6 @@ class Handler {
         return true;
     }
 
-    public function buildTableName() {
-        return 'request_archives_' . date('Ym', $this->_row['ctime']);
-    }
-
     public function create() {
         $ArchiveEntity = new \Service\Archive\Request\ArchiveEntity($this->_row);
         $ArchiveEntity->create();
