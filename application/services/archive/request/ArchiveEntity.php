@@ -6,13 +6,12 @@
  */
 namespace Service\Archive\Request;
 
-class ArchiveEntity {
+use Service\Archive\Request\SourceEntity;
+
+class ArchiveEntity extends SourceEntity {
 
     public function __construct($row) {
-        foreach ($row as $key => $value) {
-            $this->$key = $value;
-        }
-        $this->_row = $row;
+        parent::__construct($row);
     }
 
     protected function _buildTableName() {
